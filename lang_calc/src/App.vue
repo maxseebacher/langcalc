@@ -1,16 +1,18 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <world_view />
+  <footer class="footer">
+    Maximilian Seebacher - 2023
+  </footer>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import world_view from './components/world_view.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    world_view
+  },
 }
 </script>
 
@@ -22,5 +24,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.footer {
+  left: 0;
+  right: 0;
+  position: fixed;
+  bottom: 15px;
 }
 </style>
