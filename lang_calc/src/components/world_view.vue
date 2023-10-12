@@ -1,6 +1,6 @@
 <script setup>
 import side_bar from './side_bar.vue';
-import VueWorldMap from "vue-world-map";
+
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import VueWorldMap from "vue-world-map";
       <side_bar></side_bar>
     </div>
     <div class="map">
-      <vue-world-map id="worldmap"></vue-world-map>
+      
     </div>
   </div>
 </template>
