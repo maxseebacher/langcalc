@@ -36,12 +36,12 @@ a {
 
 .map {
   float: left;
-  width: 70%;
+  width: 80%;
 }
 
 .sidebar {
   float: left;
-  width: 30%;
+  width: 20%;
 }
 
 .row:after {
