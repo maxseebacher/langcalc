@@ -1,6 +1,15 @@
 <script setup>
 import side_bar from './side_bar.vue';
+import { countries } from './side_bar.vue'
+import VueWorldMap from "vue-world-map";
+import { ref } from 'vue';
 
+const map = ref({
+  defaultCountryFillColor: "#663300",
+  highColor: "red",
+  lowColor: "red",
+  countryStrokeColor: "black",
+});
 </script>
 
 <template>
@@ -9,7 +18,9 @@ import side_bar from './side_bar.vue';
       <side_bar></side_bar>
     </div>
     <div class="map">
-      
+      <vue-world-map id="worldmap" v-bind:countryData="countries"
+        v-bind:defaultCountryFillColor="map.defaultCountryFillColor" v-bind:highColor="map.highColor"
+        v-bind:countryStrokeColor="map.countryStrokeColor" v-bind:lowColor="map.lowColor"></vue-world-map>
     </div>
   </div>
 </template>
