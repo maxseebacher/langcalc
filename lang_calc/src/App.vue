@@ -1,17 +1,17 @@
 <template>
-  <world_view />
+  <side_bar />
   <footer class="footer">
     Maximilian Seebacher - 2023
   </footer>
 </template>
 
 <script>
-import world_view from './components/world_view.vue';
+import side_bar from './components/side_bar.vue';
 
 export default {
   name: 'App',
   components: {
-    world_view
+    side_bar
   },
 }
 </script>
