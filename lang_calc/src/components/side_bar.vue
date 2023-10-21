@@ -8,7 +8,12 @@ import Chart from 'primevue/chart';
 import VueWorldMap from "vue-world-map";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 
+import 'primevue/resources/themes/lara-light-purple/theme.css'
+
+let counter = 0;
 const languages = ref();
 const filteredLanguages = ref();
 const selectedLanguage = ref();
@@ -31,6 +36,7 @@ async function addlanguage() {
     if (selectedLanguage.value.name.length == 0) return;
     selectedLanguages.value.push({ name: selectedLanguage.value.name });
     await obtainLanguageData();
+    counter++;
     chartData.value = setChartData();
 }
 function removelanguage(name) {
@@ -50,6 +56,7 @@ function removelanguage(name) {
     });
     countries.value = newList;
     chartData.value = setChartData();
+    counter--;
 }
 const countries = ref([]);
 const selectedPeople = ref(0);
@@ -69,7 +76,7 @@ const setChartData = () => {
     };
 };
 
-const countryCodes = ref({});
+const countryCodes = ref({max:1,seeb:1e9});
 
 async function obtainLanguageData() {
     await axios.get("https://restcountries.com/v3.1/lang/" + selectedLanguage.value.name).then((response) => {
@@ -77,9 +84,10 @@ async function obtainLanguageData() {
             if (country === undefined) return;
             selectedPeople.value += country.population;
             countries.value.push({ lang: selectedLanguage.value.name, name: country.name.official, population: country.population, code: country.cca2 });
-            countryCodes.value[country.cca2] = 1e9
+            countryCodes.value[country.cca2] = 1e9;
+            
         })
-    })
+    });
 }
 
 const chartOptions = ref({
@@ -105,7 +113,7 @@ const map = ref({
             <h1>Combined Language Calculator</h1>
             <div>
                 <h2>Selected languages</h2>
-                <AutoComplete placeholder="Enter languages" v-model="selectedLanguage" optionLabel="name"
+                <AutoComplete placeholder="Enter languages" dropdown v-model="selectedLanguage" optionLabel="name"
                     :suggestions="filteredLanguages" @complete="search"></AutoComplete>
                 <Button label="Add" severity="success" @click="addlanguage()" />
                 <DataTable :value="selectedLanguages">
@@ -119,9 +127,13 @@ const map = ref({
             <div>
                 <h2>Your stats</h2> <br> <br> <br> <br>
                 You can speak to {{ (selectedPeople / totalPeople * 100).toFixed(2) }}% of world's population. Congratulations! <br>
-                <DataTable :value="countries">
-                    <Column field="name" header="Name"></Column>
-                </DataTable>
+                <Accordion :activeIndex="0">
+                    <AccordionTab header="Countries">
+                        <DataTable :value="countries">
+                        <Column field="name" header=""></Column>
+                    </DataTable>
+                    </AccordionTab>
+                </Accordion>
                 <div class="card flex justify-content-center">
                     <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
                 </div>
@@ -129,7 +141,7 @@ const map = ref({
             </div>
         </div>
         <div class="map">
-        <vue-world-map id="worldmap" v-bind:countryData="countryCodes"
+        <vue-world-map id="worldmap" v-bind:countryData="countryCodes" :key="counter"
             v-bind:defaultCountryFillColor="map.defaultCountryFillColor" v-bind:highColor="map.highColor"
             v-bind:countryStrokeColor="map.countryStrokeColor" v-bind:lowColor="map.lowColor"></vue-world-map>
         </div>
