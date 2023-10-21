@@ -34,10 +34,14 @@ const search = (event) => {
 
 async function addlanguage() {
     if (selectedLanguage.value.name.length == 0) return;
-    selectedLanguages.value.push({ name: selectedLanguage.value.name });
+    for(let i = 0;i<selectedLanguages.value.length;i++){
+        if(selectedLanguages.value[i].name == selectedLanguage.value.name) return;
+    }
+    selectedLanguages.value.push({name: selectedLanguage.value.name});
     await obtainLanguageData();
     counter++;
     chartData.value = setChartData();
+    console.log(selectedLanguages.value)
 }
 function removelanguage(name) {
     let newList = [];
