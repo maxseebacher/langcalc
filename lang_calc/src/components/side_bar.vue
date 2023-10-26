@@ -120,7 +120,7 @@ const map = ref({
                 <AutoComplete placeholder="Enter languages" dropdown v-model="selectedLanguage" optionLabel="name"
                     :suggestions="filteredLanguages" @complete="search"></AutoComplete>
                 <Button label="Add" severity="success" @click="addlanguage()" />
-                <DataTable :value="selectedLanguages">
+                <DataTable :value="selectedLanguages" v-if="selectedLanguages.length">
                     <Column field="name" header="Name">
                         <template #body="slotProps">
                             {{slotProps.data.name}} <Button label="Remove" severity="danger" @click="removelanguage(slotProps.data.name)" />
@@ -131,11 +131,11 @@ const map = ref({
             <div>
                 <h2>Your stats</h2> <br> <br> <br> <br>
                 You can speak to {{ (selectedPeople / totalPeople * 100).toFixed(2) }}% of world's population. Congratulations! <br>
-                <Accordion :activeIndex="0">
+                <Accordion :activeIndex="0" v-if="countries.length">
                     <AccordionTab header="Countries">
                         <DataTable :value="countries">
-                        <Column field="name" header=""></Column>
-                    </DataTable>
+                            <Column field="name" header=""></Column>
+                        </DataTable>
                     </AccordionTab>
                 </Accordion>
                 <div class="card flex justify-content-center">
