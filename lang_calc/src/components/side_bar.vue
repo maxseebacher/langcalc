@@ -114,7 +114,7 @@ const map = ref({
 <template>
     <div class="row">
         <div class="sidebar">
-            <h1>Combined Language Calculator</h1>
+            <h1>Language Coverage Calculator</h1>
             <div>
                 <h2>Selected languages</h2>
                 <AutoComplete placeholder="Enter languages" dropdown v-model="selectedLanguage" optionLabel="name"
@@ -130,7 +130,7 @@ const map = ref({
             </div>
             <div>
                 <h2>Your stats</h2> <br> <br> <br> <br>
-                You can speak to {{ (selectedPeople / totalPeople * 100).toFixed(2) }}% of world's population. Congratulations! <br>
+                <div v-if="selectedPeople">You can speak to {{ (selectedPeople / totalPeople * 100).toFixed(2) }}% of world's population. Congratulations! <br></div>
                 <Accordion :activeIndex="0" v-if="countries.length">
                     <AccordionTab header="Countries">
                         <DataTable :value="countries">
@@ -138,7 +138,7 @@ const map = ref({
                         </DataTable>
                     </AccordionTab>
                 </Accordion>
-                <div class="card flex justify-content-center">
+                <div class="card flex justify-content-center" v-if="selectedPeople">
                     <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
                 </div>
 
